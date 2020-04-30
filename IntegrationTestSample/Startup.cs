@@ -27,8 +27,8 @@ namespace IntegrationTestSample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            services.AddScoped<TestService>();
+
+            services.AddScoped<ITestService, TestService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

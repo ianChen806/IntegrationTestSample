@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace IntegrationTestSample.Controllers
 {
-    public class TestService
+    public class TestService : ITestService
     {
         private static readonly string[] Summaries = new[]
         {

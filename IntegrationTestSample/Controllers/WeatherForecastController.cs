@@ -10,9 +10,9 @@ namespace IntegrationTestSample.Controllers
     public class WeatherForecastController : ControllerBase
     {
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly TestService _testService;
+        private readonly ITestService _testService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, TestService testService)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ITestService testService)
         {
             _logger = logger;
             _testService = testService;
