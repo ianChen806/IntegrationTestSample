@@ -1,27 +1,38 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace IntegrationTestSample.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
         private readonly ITestService _testService;
+        private readonly MyDbContext _dbContext;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ITestService testService)
+        public WeatherForecastController(ITestService testService, MyDbContext dbContext)
         {
-            _logger = logger;
             _testService = testService;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
             return _testService.WeatherForecasts();
+        }
+
+        [HttpGet]
+        public int GetDb()
+        {
+            _dbContext.Member.Add(new Member()
+            {
+                Name = "Controller"
+            });
+            _dbContext.SaveChanges();
+
+            return _dbContext.Member.Count();
         }
     }
 }
