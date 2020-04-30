@@ -8,8 +8,8 @@ namespace IntegrationTestSample.Controllers
     [Route("[controller]/[action]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly ITestService _testService;
         private readonly MyDbContext _dbContext;
+        private readonly ITestService _testService;
 
         public WeatherForecastController(ITestService testService, MyDbContext dbContext)
         {
@@ -24,15 +24,13 @@ namespace IntegrationTestSample.Controllers
         }
 
         [HttpGet]
-        public int GetDb()
+        public void GetDb()
         {
-            _dbContext.Member.Add(new Member()
+            _dbContext.Member.Add(new Member
             {
                 Name = "Controller"
             });
             _dbContext.SaveChanges();
-
-            return _dbContext.Member.Count();
         }
     }
 }
