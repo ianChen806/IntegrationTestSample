@@ -6,7 +6,7 @@ namespace IntegrationTestSample.Test
     public class TestBase
         : IClassFixture<WebApplicationFactory<Startup>>
     {
-        private readonly WebApplicationFactory<Startup> _applicationFactory;
+        protected readonly WebApplicationFactory<Startup> _applicationFactory;
 
         public TestBase(WebApplicationFactory<Startup> applicationFactory)
         {
