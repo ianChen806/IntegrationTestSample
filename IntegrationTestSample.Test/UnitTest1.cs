@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -34,11 +35,26 @@ namespace IntegrationTestSample.Test
                 });
             });
 
-            var message = await httpClient.GetAsync("/WeatherForecast");
+            var message = await httpClient.GetAsync("/WeatherForecast/Get");
             var list = await message.Content.ReadAsAsync<List<WeatherForecast>>();
 
             message.StatusCode.Should().Be(HttpStatusCode.OK);
             list.Count.Should().Be(1);
+        }
+
+        [Fact]
+        public async Task TestDb()
+        {
+            var httpClient = CreateHttpClient(null);
+
+            var message = await httpClient.GetAsync("/WeatherForecast/GetDb");
+
+            message.StatusCode.Should().Be(HttpStatusCode.OK);
+            DbOperator(context =>
+            {
+                var member = context.Member.FirstOrDefault(r => r.Name == "Controller");
+                member.Should().NotBeNull();
+            });
         }
     }
 }
